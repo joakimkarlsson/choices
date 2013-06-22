@@ -10,7 +10,7 @@ Describe(a_parser)
   {
     int argc = 1;
     const char *argv[] = {"path/to/executable"};
-    std::map<std::string, std::string> options = c::parse_cmd(argc, argv);
+    c::options options = c::parse_cmd(argc, argv);
     AssertThat(options, Is().Empty());
   }
 
@@ -18,7 +18,7 @@ Describe(a_parser)
   {
     int argc = 2;
     const char *argv[] = {"path/to/executable", "--version"};
-    std::map<std::string, std::string> options = c::parse_cmd(argc, argv);
+    c::options options = c::parse_cmd(argc, argv);
     AssertThat(options, Is().OfLength(1));
   }
 
@@ -26,7 +26,7 @@ Describe(a_parser)
   {
     int argc = 2;
     const char *argv[] = {"path/to/executable", "--version"};
-    std::map<std::string, std::string> options = c::parse_cmd(argc, argv);
+    c::options options = c::parse_cmd(argc, argv);
 
     AssertThat(c::has_option("not_there", options), Is().False());
   }
@@ -35,7 +35,7 @@ Describe(a_parser)
   {
     int argc = 2;
     const char *argv[] = {"path/to/executable", "--version"};
-    std::map<std::string, std::string> options = c::parse_cmd(argc, argv);
+    c::options options = c::parse_cmd(argc, argv);
 
     AssertThat(c::has_option("version", options), Is().True());
   }
