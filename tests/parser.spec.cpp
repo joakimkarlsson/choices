@@ -40,4 +40,14 @@ Describe(a_parser)
     AssertThat(c::has_option("version", options), Is().True());
   }
 
+  It(reads_options_with_values)
+  {
+    int argc = 3;
+    const char *argv[] = {"path/to/executable", "--option", "value"};
+    c::options options = c::parse_cmd(argc, argv);
+
+    AssertThat(c::has_option("option", options), Is().True());
+    AssertThat(c::option_value("option", options), Is().EqualTo("value"));
+  }
+
 };
