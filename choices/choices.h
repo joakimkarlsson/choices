@@ -43,6 +43,7 @@ namespace choices {
   }
 
   namespace details {
+
     void as_vect(int argc, const char *argv[], std::vector<std::string>& res)
     {
       res.assign(argv, argv + argc);
@@ -54,14 +55,6 @@ namespace choices {
       return pos == std::string::npos ? s : s.substr(pos + 2);
     }
 
-    void as_map(std::vector<std::string> v, options& o)
-    {
-      for(size_t i=0; i<v.size(); i++)
-      {
-        o[v[i]] = "";
-      }
-    }
-    
     bool is_assignment(const std::string& s)
     {
       return s.find("=") != std::string::npos;
@@ -72,19 +65,9 @@ namespace choices {
       return s.find("--") == 0 && !is_assignment(s);
     }
 
-    bool is_value(const std::string& s)
-    {
-      return !is_flag(s);
-    }
-
     bool has_flag(const std::pair<std::string, std::string> p)
     {
       return p.first != "";
-    }
-
-    void clear(std::pair<std::string, std::string> p)
-    {
-      p.first = p.second = "";
     }
 
     std::string flag(const std::string& assignment)
