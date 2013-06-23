@@ -39,9 +39,14 @@ namespace choices {
       }
     }
     
+    bool is_assignment(const std::string& s)
+    {
+      return s.find("=") != std::string::npos;
+    }
+
     bool is_flag(const std::string& s)
     {
-      return s.find("--") == 0;
+      return s.find("--") == 0 && !is_assignment(s);
     }
 
     bool is_value(const std::string& s)
@@ -59,41 +64,32 @@ namespace choices {
       p.first = p.second = "";
     }
 
+    std::string flag(const std::string& assignment)
+    {
+      std::string s = remove_prefix(assignment);
+      return s.substr(0, s.find("="));
+    }
+
+    std::string value(const std::string& assignment)
+    {
+      return assignment.substr(assignment.find("=")+1);
+    }
+
     void get_options(const std::vector<std::string> v, options& opt)
     {
-      std::pair<std::string, std::string> curr;
-
       std::vector<std::string>::const_iterator it;
       for(it = v.begin(); it != v.end(); it++)
       {
         if(is_flag(*it))
         {
-          if(has_flag(curr))
-          {
-            opt.insert(curr);
-            clear(curr);
-          }
-
-          curr.first = remove_prefix(*it);
+          opt[remove_prefix(*it)] = "";
         }
-        else
+        else if(is_assignment(*it)) 
         {
-          if(has_flag(curr))
-          {
-            curr.second = *it;
-            opt.insert(curr);
-            clear(curr);
-          }
+          opt[flag(*it)] = value(*it);
         }
-      }
-
-      if(has_flag(curr))
-      {
-        opt.insert(curr);
-        clear(curr);
       }
     }
-
   }
 
   namespace d = details;

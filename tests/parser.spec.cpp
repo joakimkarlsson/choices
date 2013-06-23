@@ -42,8 +42,8 @@ Describe(a_parser)
 
   It(reads_options_with_values)
   {
-    int argc = 3;
-    const char *argv[] = {"path/to/executable", "--option", "value"};
+    int argc = 2;
+    const char *argv[] = {"path/to/executable", "--option=value"};
     c::options options = c::parse_cmd(argc, argv);
 
     AssertThat(c::has_option("option", options), Is().True());
