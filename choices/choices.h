@@ -44,7 +44,7 @@ namespace choices {
 
   namespace details {
 
-    void as_vect(int argc, const char *argv[], std::vector<std::string>& res)
+    void as_vect(int argc, char *argv[], std::vector<std::string>& res)
     {
       res.assign(argv, argv + argc);
     }
@@ -100,7 +100,7 @@ namespace choices {
 
   namespace d = details;
 
-  options parse_cmd(int argc, const char *argv[])
+  options parse_cmd(int argc, char *argv[])
   {
     std::vector<std::string> v;
     d::as_vect(argc, argv, v);

@@ -2,7 +2,9 @@
 using namespace igloo;
 
 #include <choices/choices.h>
+#include <tests/util/argv_helper.h>
 namespace c = choices;
+namespace u = choices::tests::util;
 
 Describe(a_parser)
 {
@@ -10,7 +12,8 @@ Describe(a_parser)
   {
     int argc = 1;
     const char *argv[] = {"path/to/executable"};
-    c::options options = c::parse_cmd(argc, argv);
+    u::argv_helper a(argc, argv);
+    c::options options = c::parse_cmd(a.argc(), a.argv());
     AssertThat(options, Is().Empty());
   }
 
@@ -18,7 +21,8 @@ Describe(a_parser)
   {
     int argc = 2;
     const char *argv[] = {"path/to/executable", "--version"};
-    c::options options = c::parse_cmd(argc, argv);
+    u::argv_helper a(argc, argv);
+    c::options options = c::parse_cmd(a.argc(), a.argv());
     AssertThat(options, Is().OfLength(1));
   }
 
@@ -26,7 +30,8 @@ Describe(a_parser)
   {
     int argc = 2;
     const char *argv[] = {"path/to/executable", "--version"};
-    c::options options = c::parse_cmd(argc, argv);
+    u::argv_helper a(argc, argv);
+    c::options options = c::parse_cmd(a.argc(), a.argv());
 
     AssertThat(c::has_option("not_there", options), Is().False());
   }
@@ -35,7 +40,8 @@ Describe(a_parser)
   {
     int argc = 2;
     const char *argv[] = {"path/to/executable", "--version"};
-    c::options options = c::parse_cmd(argc, argv);
+    u::argv_helper a(argc, argv);
+    c::options options = c::parse_cmd(a.argc(), a.argv());
 
     AssertThat(c::has_option("version", options), Is().True());
   }
@@ -44,7 +50,8 @@ Describe(a_parser)
   {
     int argc = 2;
     const char *argv[] = {"path/to/executable", "--option=value"};
-    c::options options = c::parse_cmd(argc, argv);
+    u::argv_helper a(argc, argv);
+    c::options options = c::parse_cmd(a.argc(), a.argv());
 
     AssertThat(c::has_option("option", options), Is().True());
     AssertThat(c::option_value("option", options), Is().EqualTo("value"));
